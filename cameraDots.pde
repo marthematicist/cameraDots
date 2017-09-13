@@ -1,22 +1,14 @@
 PImage img;
-// Step 1. Import the video library.
 import processing.video.*;
-
-//Step 2. Declare a capture object.
 Capture video;
-
-// Step 5. Read from the camera when a new image is available!
 void captureEvent(Capture video) 
 {
   video.read();
 }
 void setup() {
   size( 800 , 600 );
-  img = loadImage( "IMG_0359.JPG");
-  // Step 3. Initialize Capture object.
   video = new Capture(this, 320, 240);
   colorMode(HSB,1);
-  // Step 4. Start the capturing process.
   video.start();
   background(0,0,0);
 }
@@ -25,7 +17,6 @@ float avgBri = 1;
 float rollAmt = 0.001;
 
 void draw() {
-  float thres = 0.45;
   loadPixels();
   noStroke();
   float alpha1 = 0.6;
@@ -48,12 +39,11 @@ void draw() {
       avgBri = b*rollAmt + avgBri*(1-rollAmt);
       if( b > avgBri ) { 
         float h = hue(c);
-        float s = saturation(c);
-        fill(h,1,b,alpha1); 
+        fill(h,1,1,alpha1); 
       }
       else { fill(0,0,0,alpha2); }
       ellipse(xd,yd,diam,diam);
     }
   }
-  println(avgBri);
+  if(frameCount%100 == 0) { println(avgBri); }
 }
